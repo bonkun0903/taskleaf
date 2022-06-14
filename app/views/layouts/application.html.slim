@@ -10,6 +10,8 @@ html
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   body
     .app-title.navbar.navbar-expand-md.navbar-lght.bg-light
-      .navbar-brand Taskleaf 
-    .container 
+      = link_to "Taskleaf", tasks_path, class: '.navbar-brand'
+    .container
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice 
       = yield

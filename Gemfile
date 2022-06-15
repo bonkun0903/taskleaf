@@ -48,6 +48,7 @@ gem "bootsnap", require: false
 gem "slim-rails"
 gem "html2slim"
 gem 'rails-i18n'
+gem 'rails_autolink'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

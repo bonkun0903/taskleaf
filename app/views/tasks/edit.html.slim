@@ -3,4 +3,19 @@ h1 タスクの編集
 .nav.justify-content-end 
   = link_to  "一覧", tasks_url, class: 'nav-link' 
 
-= render partial: 'form', local: { task: @task }
+/ = render partial: 'form', local: { task: @task }
+
+- if @task.errors.present?
+ ul#error_explanation
+  - @task.errors.full_messages.each do |message|
+    li.bg-danger = message
+
+= form_with model: @task, url: confirm_edit_task_url, data: { turbo: false } do |f|
+  .form-group 
+    = f.label :name
+    = f.text_field :name, class: 'form-control', id: 'task_name'
+  .form-group 
+    = f.label :description
+    = f.text_area :description, rows: 5, class: 'form-control', id: 'task_decription'
+    br
+  = f.submit '確認', class: 'btn btn-primary'

@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   protect_from_forgery :except => [:destroy]
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :confirm_edit, :update, :destroy]
   def index
     @tasks = current_user.tasks.recent
   end
@@ -35,11 +35,17 @@ class TasksController < ApplicationController
   def edit
   end
 
-  # def confirm_edit
-  #   redirect_to task_edit_confirm_path, method: :post
-  # end
+  def confirm_edit
+    @task.assign_attributes(task_params)
+    render :edit unless @task.valid?
+  end
 
   def update
+    if params[:back].present?
+      render :edit
+      return
+    end
+
     @task.update!(task_params)
     redirect_to tasks_url, notice: "タスク「#{@task.name}」を更新しました。"
   end
@@ -55,6 +61,13 @@ class TasksController < ApplicationController
   end
 
   def set_task
-    @task = current_user.tasks.find(params[:id])
+    if params[:back]
+      @task = Task.find(params[:id])
+      @task.assign_attributes(task_params) 
+    else
+      # 存在しないIDのタスクを取得しようとした場合に「そのようなデータは存在しない」と表示
+      @task = current_user.tasks.find_by(id: params[:id])
+      redirect_to tasks_url, notice: "タスクが存在しません。" if @task.nil?
+    end
   end
 end

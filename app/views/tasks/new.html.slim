@@ -4,3 +4,18 @@ h1 タスクの新規登録
   = link_to  '一覧', tasks_path, class: 'nav-link'
 
 / = render partial: 'form', local: { task: @task }
+
+- if @task.errors.present?
+ ul#error_explanation
+  - @task.errors.full_messages.each do |message|
+    li.bg-danger = message
+
+= form_with model: @task, url: confirm_new_task_path, local: true, data: { turbo: false } do |f|
+  .form-group 
+    = f.label :name
+    = f.text_field :name, class: 'form-control', id: 'task_name'
+  .form-group 
+    = f.label :description
+    = f.text_area :description, rows: 5, class: 'form-control', id: 'task_decription'
+    br
+  = f.submit '確認', class: 'btn btn-primary'

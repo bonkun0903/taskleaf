@@ -39,7 +39,16 @@ class TasksController < ApplicationController
   end
 
   def confirm_edit
+    # タスクの内容を確認して、変化がないようならメッセージ付きでrenderする    
+    tmp = @task.dup
     @task.assign_attributes(task_params)
+    if tmp.name == @task.name && tmp.description == @task.description
+      @url = confirm_edit_task_url
+      flash[:notice] = "タスクを編集してください。"
+      render :edit
+    end
+    # 不要なflashメッセージを削除する
+    flash.discard
     render :edit unless @task.valid?
   end
 

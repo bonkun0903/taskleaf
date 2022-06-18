@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    @url = confirm_new_task_path
     @task = Task.new
   end
 
@@ -19,6 +20,7 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new(task_params)
+    @url = confirm_new_task_path
 
     if params[:back].present?
       render :new
@@ -33,6 +35,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @url = confirm_edit_task_url
   end
 
   def confirm_edit
@@ -41,6 +44,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    @url = confirm_edit_task_url
     if params[:back].present?
       render :edit
       return

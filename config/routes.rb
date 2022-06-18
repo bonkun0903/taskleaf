@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
+  controller :tasks do
+    resources :tasks do
+      post :confirm, action: :confirm_new, on: :new
+    end
+  end
+
+  # TODO：リファクタリングする
+  # post 'task/edit/confirm', to: 'tasks#confirm_edit'
 
   controller :sessions do
     get '/login', to:'sessions#new'
@@ -13,7 +21,4 @@ Rails.application.routes.draw do
     end
   end
 
-  controller :tasks do
-    resources :tasks
-  end
 end

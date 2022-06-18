@@ -19,5 +19,5 @@ table.table.table-hover
           = link_to  "編集", edit_task_path(task), class: 'btn btn-warning mr-3'
         td
           = button_to "削除", task_path(task), method: :delete, 
-                        data: { turbo_confirm: "タスク「#{task.name}」を削除します。よろしいですか？"}, 
+                        form: { data: { turbo_confirm: "タスク「#{task.name}」を削除します。よろしいですか？" } }, 
                         class: 'btn btn-danger mr-3'

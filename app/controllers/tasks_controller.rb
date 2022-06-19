@@ -2,7 +2,8 @@ class TasksController < ApplicationController
   protect_from_forgery :except => [:destroy]
   before_action :set_task, only: [:show, :edit, :confirm_edit, :update, :destroy]
   def index
-    @tasks = current_user.tasks.recent
+    @q = current_user.tasks.ransack(params[:q])
+    @tasks = @q.result(distinct: true).recent
   end
 
   def show
@@ -17,7 +18,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.new(task_params)
     render :new unless @task.valid?
   end
-
+  
   def create
     @task = current_user.tasks.new(task_params)
     @url = confirm_new_task_path

@@ -49,6 +49,7 @@ gem "slim-rails"
 gem "html2slim"
 gem 'rails-i18n'
 gem 'rails_autolink'
+gem 'ransack'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

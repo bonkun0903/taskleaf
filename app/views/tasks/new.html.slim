@@ -3,4 +3,24 @@ h1 タスクの新規登録
 .nav.justify-content-end 
   = link_to  '一覧', tasks_path, class: 'nav-link'
 
-= render partial: 'form', local: { task: @task }
+/ = render partial: 'form', local: { task: @task }
+
+/ 画像保存機能の実装が複雑になるため、一時的に新規登録の確認画面を経由しないフォーム送信機能
+- if @task.errors.present?
+ ul#error_explanation
+  - @task.errors.full_messages.each do |message|
+    li.bg-danger = message
+
+= form_with model: @task, local: true, data: { turbo: false } do |f|
+  .form-group 
+    = f.label :name
+    = f.text_field :name, class: 'form-control', id: 'task_name'
+  .form-group 
+    = f.label :description
+    = f.text_area :description, rows: 5, class: 'form-control', id: 'task_decription'
+  .form-group 
+    = f.label :image
+    = f.file_field :image, class: 'form-control'
+    br
+  = link_to "戻る", tasks_path, class: 'btn btn-primary'
+  = f.submit '登録', class: 'btn btn-primary'

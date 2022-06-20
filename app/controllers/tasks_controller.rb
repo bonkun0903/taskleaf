@@ -78,6 +78,12 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice: "タスク「#{@task.name}」を削除しました。"
   end
 
+  def import
+    # ログインしているユーザーのタスク群としてインポート
+    current_user.tasks.import(params[:file])
+    redirect_to tasks_url, notice: 'タスクを追加しました。'
+  end
+
   private
   def task_params
     params.require(:task).permit(:name, :description, :image)

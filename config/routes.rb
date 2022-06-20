@@ -4,9 +4,8 @@ Rails.application.routes.draw do
   controller :tasks do
     resources :tasks do
       post :confirm, action: :confirm_new, on: :new
-      member do
-        patch :confirm_edit
-      end
+      patch :confirm_edit, on: :member
+      post :import, on: :collection
     end
   end
 

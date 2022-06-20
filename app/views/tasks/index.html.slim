@@ -37,3 +37,4 @@ table.table.table-hover
           = button_to "削除", task_path(task), method: :delete, 
                         form: { data: { turbo_confirm: "タスク「#{task.name}」を削除します。よろしいですか？" } }, 
                         class: 'btn btn-danger mr-3'
+= link_to  "エクスポート", tasks_path(format: :csv), class: 'btn btn-primary mb-3'

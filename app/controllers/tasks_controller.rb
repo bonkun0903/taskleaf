@@ -28,7 +28,9 @@ class TasksController < ApplicationController
       return
     end
     if @task.save
-      logger.debug "task: #{@task.attributes.inspect}"
+      TaskMailer.creation_email(@task).deliver_now
+      # タスク新規作成後、5分後に通知メールを送信
+      # TaskMailer.creation_email(@task).deliver_later(wait: 5.minute)
       redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。"
     else
       render :new

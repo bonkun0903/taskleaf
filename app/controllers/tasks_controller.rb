@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
   protect_from_forgery :except => [:destroy]
   before_action :set_task, only: [:show, :edit, :confirm_edit, :update, :destroy]
+
   def index
     @q = current_user.tasks.ransack(params[:q])
-    @tasks = @q.result(distinct: true)
+    @tasks = @q.result(distinct: true).page(params[:page])
 
     respond_to do |format|
       # HTMLフォーマット（拡張子なしURL）でのアクセスの場合実行、特に何もしない

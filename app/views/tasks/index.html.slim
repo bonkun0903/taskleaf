@@ -19,6 +19,11 @@ h1 タスク一覧
   = file_field_tag :file
   = submit_tag "インポート", class: 'btn btn-primary'
 
+/ ページネーション機能
+.mb-3 
+  = paginate @tasks, theme: 'bootstrap-5'
+  = page_entries_info @tasks
+
 .mb-3 
 table.table.table-hover
   thead.thead-default 

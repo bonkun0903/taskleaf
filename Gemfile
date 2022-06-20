@@ -50,6 +50,8 @@ gem "html2slim"
 gem 'rails-i18n'
 gem 'rails_autolink'
 gem 'ransack'
+gem 'kaminari'
+gem 'bootstrap5-kaminari-views'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

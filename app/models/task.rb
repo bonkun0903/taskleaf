@@ -6,6 +6,8 @@ class Task < ApplicationRecord
   has_one_attached :image
 
   scope :recent, -> { order(created_at: :desc) }
+  # ページネーションの表示件数デフォルトを設定
+  # paginates_per 50
 
   # ransack gemをオーバーライドし検索対象を制限する
   def self.ransackable_attributes(auth_object = nil)
@@ -23,7 +25,7 @@ class Task < ApplicationRecord
 
   def self.generate_csv
     CSV.generate(headers: true) do |csv|
-      csv << csv_attributes
+      csv << csv_attributes  
       # スコープを絞り込んだgenerateの場合はallは何もしない
       all.each do |task|
         csv << csv_attributes.map { |attr| task.send(attr) }

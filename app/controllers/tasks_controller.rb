@@ -39,6 +39,14 @@ class TasksController < ApplicationController
       TaskMailer.creation_email(@task).deliver_now
       # タスク新規作成後、5分後に通知メールを送信
       # TaskMailer.creation_email(@task).deliver_later(wait: 5.minute)
+      # ジョブを実行
+      SampleJob.perform_later
+      # 翌日の正午にジョブを実行
+      # SampleJob.set(wait_until: Date.tomorrow.noon).perform_later
+      # １週間後にジョブを実行
+      # SampleJob.set(wait: 1.week).perform_later
+      # 10秒後にジョブを実行
+      SampleJob.set(wait: 1.minute).perform_later
       redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。"
     else
       render :new

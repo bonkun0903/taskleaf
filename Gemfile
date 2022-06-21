@@ -52,6 +52,7 @@ gem 'rails_autolink'
 gem 'ransack'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
+gem 'sidekiq'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

@@ -74,4 +74,6 @@ Rails.application.configure do
 
   # １日ごとにログを出力
   config.logger = Logger.new('log/development.log', 'daily')
+
+  config.active_job.queue_adapter = :sidekiq
 end
